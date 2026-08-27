@@ -1,0 +1,15 @@
+# resp_reader_fuzzer — hiredis's RESP2/RESP3 protocol parser (redisReader / read.c), fed raw bytes
+# directly (the same feed+GetReply loop hiredis.c itself uses on real socket data). This is the
+# primary, security-relevant target in this port. Seeds: valid RESP-encoded fixtures covering every
+# reply type read.c recognizes (status/error/integer/bulk/nil/array/nested-array/double/null/
+# boolean/map/set/push/verbatim/bignum) plus a pipelined multi-bulk client command.
+project: savantenvs/hiredis
+target: resp_reader_fuzzer
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/resp_reader_fuzzer/testsuite
+cmds:
+  - cmd: /mayhem/resp_reader_fuzzer
+    libfuzzer: true
+    timeout: 30
+    dictionary: /mayhem/mayhem/resp_reader_fuzzer/resp_reader_fuzzer.dict

@@ -1,0 +1,26 @@
+# libFuzzer dictionary for resp_reader_fuzzer (hiredis RESP2/RESP3 protocol parser, read.c).
+# One RESP type-prefix / framing token per line. Escapes are libFuzzer-dict-legal ONLY: \\, \", \xHH
+# — NOT \r/\n/\t (those abort dict parsing, see docs/netnew-worker-prompt.md §6), so CRLF is spelled
+# \x0D\x0A explicitly. Verify after any edit:
+#   <bin> -dict=resp_reader_fuzzer.dict -runs=1   # must print "Dictionary: N entries", no parse error
+"+\x0D\x0A"
+"-\x0D\x0A"
+":\x0D\x0A"
+"$\x0D\x0A"
+"*\x0D\x0A"
+",\x0D\x0A"
+"_\x0D\x0A"
+"#\x0D\x0A"
+"%\x0D\x0A"
+"|\x0D\x0A"
+"~\x0D\x0A"
+"=\x0D\x0A"
+">\x0D\x0A"
+"(\x0D\x0A"
+"\x0D\x0A"
+"$-1\x0D\x0A"
+"*-1\x0D\x0A"
+"#t\x0D\x0A"
+"#f\x0D\x0A"
+"+OK\x0D\x0A"
+"-ERR\x0D\x0A"
